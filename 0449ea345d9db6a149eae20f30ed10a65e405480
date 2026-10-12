@@ -1,0 +1,192 @@
+## selftest-capture-exe.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 1 microphones, 1 outputs |
+| real capture: open system audio | PASS | Speakers (VB-Audio Virtual Cable) |
+| real capture: open microphone | PASS | CABLE Output (VB-Audio Virtual Cable) |
+| real capture: recorded, aligned | PASS | {'meeting': 13.6, 'you': 13.6} (playback: ok) |
+| real capture: system audio transcribed | PASS | And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| real capture: microphone transcribed | PASS | And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\_internal\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | base |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, / [00:00:07] You: ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, / [00:00:22] Meeting: ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 4.9 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.934}, 'meeting': {'language': 'en', 'probability': 0.924}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+capture: `{"durations": {"meeting": 13.6, "you": 13.6}, "warnings": [], "playback": "ok", "peak_levels": {"meeting": 0.0, "you": 0.0}}`
+
+devices: `{"microphones": [["{0.0.1.00000000}.{20a26393-41c1-4210-9e5e-08081d92c889}", "CABLE Output (VB-Audio Virtual Cable)"]], "outputs": [["{0.0.0.00000000}.{dd84525a-e0ee-4bd4-8508-0cf66473c7c2}", "Speakers (VB-Audio Virtual Cable)"]], "default_mic": "{0.0.1.00000000}.{20a26393-41c1-4210-9e5e-08081d92c889}", "default_output": "{0.0.0.00000000}.{dd84525a-e0ee-4bd4-8508-0cf66473c7c2}"}`
+
+## selftest-capture-source.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 1 microphones, 1 outputs |
+| real capture: open system audio | PASS | Speakers (VB-Audio Virtual Cable) |
+| real capture: open microphone | PASS | CABLE Output (VB-Audio Virtual Cable) |
+| real capture: recorded, aligned | PASS | {'meeting': 14.45, 'you': 14.45} (playback: ok) |
+| real capture: system audio transcribed | PASS | And so, my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| real capture: microphone transcribed | PASS | And so my fellow Americans ask not what your country can do for you, ask what you can do for your country. |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | tiny |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so, my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 2.7 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.964}, 'meeting': {'language': 'en', 'probability': 0.969}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+capture: `{"durations": {"meeting": 14.45, "you": 14.45}, "warnings": [], "playback": "ok", "peak_levels": {"meeting": 0.0, "you": 0.0}}`
+
+devices: `{"microphones": [["{0.0.1.00000000}.{20a26393-41c1-4210-9e5e-08081d92c889}", "CABLE Output (VB-Audio Virtual Cable)"]], "outputs": [["{0.0.0.00000000}.{dd84525a-e0ee-4bd4-8508-0cf66473c7c2}", "Speakers (VB-Audio Virtual Cable)"]], "default_mic": "{0.0.1.00000000}.{20a26393-41c1-4210-9e5e-08081d92c889}", "default_output": "{0.0.0.00000000}.{dd84525a-e0ee-4bd4-8508-0cf66473c7c2}"}`
+
+## selftest-exe.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 1 microphones, 1 outputs |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\_internal\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | base |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, / [00:00:07] You: ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, / [00:00:22] Meeting: ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 5.0 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.934}, 'meeting': {'language': 'en', 'probability': 0.924}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [["{0.0.1.00000000}.{20a26393-41c1-4210-9e5e-08081d92c889}", "CABLE Output (VB-Audio Virtual Cable)"]], "outputs": [["{0.0.0.00000000}.{dd84525a-e0ee-4bd4-8508-0cf66473c7c2}", "Speakers (VB-Audio Virtual Cable)"]], "default_mic": "{0.0.1.00000000}.{20a26393-41c1-4210-9e5e-08081d92c889}", "default_output": "{0.0.0.00000000}.{dd84525a-e0ee-4bd4-8508-0cf66473c7c2}"}`
+
+## selftest-source-small.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 0 microphones, 0 outputs |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | small |
+| live transcription | PASS | 2 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 14.1 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.939}, 'meeting': {'language': 'en', 'probability': 0.918}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [], "outputs": [], "default_mic": null, "default_output": null}`
+
+## selftest-source-tiny.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 0 microphones, 0 outputs |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | tiny |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so, my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 2.7 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.964}, 'meeting': {'language': 'en', 'probability': 0.969}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [], "outputs": [], "default_mic": null, "default_output": null}`
+
+## app.log (tail)
+```
+2026-10-12 19:54:01,327 INFO    [MainThread] app.selftest: SELFTEST final: microphone track      PASS [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:54:01,328 INFO    [MainThread] app.selftest: SELFTEST final: system-audio track    PASS [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:54:01,328 INFO    [MainThread] app.selftest: SELFTEST final: timestamps            PASS you@0.0 meeting@14.96
+2026-10-12 19:54:01,328 INFO    [MainThread] app.selftest: SELFTEST final: speed                 PASS 14.1 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.939}, 'meeting': {'language': 'en', 'probability': 0.918}}, 'echo_segments_removed': 0}
+2026-10-12 19:54:01,332 INFO    [MainThread] app.selftest: SELFTEST export txt/md/json           PASS transcript.txt, transcript.md, transcript.json
+2026-10-12 19:54:01,333 INFO    [MainThread] app.selftest: Self-test passed
+2026-10-12 19:54:10,229 INFO    [MainThread] main: Meeting Transcriber 1.0.0 starting (frozen=False, python 3.11.9)
+2026-10-12 19:54:10,577 INFO    [MainThread] app.selftest: SELFTEST imports                      PASS numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0
+2026-10-12 19:54:10,680 INFO    [MainThread] app.selftest: SELFTEST device enumeration (info)    PASS 1 microphones, 1 outputs
+2026-10-12 19:54:11,508 INFO    [capture-meeting] app.audio: meeting opened: Speakers (VB-Audio Virtual Cable) (loopback=True)
+2026-10-12 19:54:11,514 INFO    [capture-you] app.audio: you opened: CABLE Output (VB-Audio Virtual Cable) (loopback=False)
+2026-10-12 19:54:11,515 INFO    [MainThread] app.selftest: SELFTEST real capture: open system audio PASS Speakers (VB-Audio Virtual Cable)
+2026-10-12 19:54:11,515 INFO    [MainThread] app.selftest: SELFTEST real capture: open microphone PASS CABLE Output (VB-Audio Virtual Cable)
+2026-10-12 19:54:25,135 INFO    [capture-you] app.audio: Closed you.wav (14.5 s)
+2026-10-12 19:54:25,151 INFO    [capture-meeting] app.audio: Closed meeting.wav (14.5 s)
+2026-10-12 19:54:25,151 INFO    [MainThread] app.selftest: SELFTEST real capture: recorded, aligned PASS {'meeting': 14.45, 'you': 14.45} (playback: ok)
+2026-10-12 19:54:25,539 INFO    [MainThread] app.models: Loaded model tiny from D:\a\Meeting-Trancriber\Meeting-Trancriber\models\tiny with 4 threads
+2026-10-12 19:54:26,725 INFO    [MainThread] app.selftest: SELFTEST real capture: system audio transcribed PASS And so, my fellow Americans, ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:54:27,890 INFO    [MainThread] app.selftest: SELFTEST real capture: microphone transcribed PASS And so my fellow Americans ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:54:27,912 INFO    [MainThread] app.selftest: SELFTEST sample                       PASS D:\a\Meeting-Trancriber\Meeting-Trancriber\assets\selftest_jfk.flac
+2026-10-12 19:54:27,993 INFO    [MainThread] app.selftest: SELFTEST wav valid while recording    PASS 244800 frames
+2026-10-12 19:54:28,031 INFO    [MainThread] app.selftest: SELFTEST wav files                    PASS 28.0 s, 2 ch
+2026-10-12 19:54:28,310 INFO    [live-transcriber] app.models: Loaded model tiny from D:\a\Meeting-Trancriber\Meeting-Trancriber\models\tiny with 2 threads
+2026-10-12 19:54:29,215 INFO    [live-transcriber] app.transcribe: Live language locked to en (p=0.96)
+2026-10-12 19:54:32,633 INFO    [MainThread] app.selftest: SELFTEST live model                   PASS tiny
+2026-10-12 19:54:32,633 INFO    [MainThread] app.selftest: SELFTEST live transcription           PASS 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe
+2026-10-12 19:54:32,986 INFO    [MainThread] app.models: Loaded model tiny from D:\a\Meeting-Trancriber\Meeting-Trancriber\models\tiny with 4 threads
+2026-10-12 19:54:35,340 INFO    [MainThread] app.selftest: SELFTEST final: microphone track      PASS [00:00:00] You: And so, my fellow Americans, ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:54:35,341 INFO    [MainThread] app.selftest: SELFTEST final: system-audio track    PASS [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:54:35,341 INFO    [MainThread] app.selftest: SELFTEST final: timestamps            PASS you@0.0 meeting@14.96
+2026-10-12 19:54:35,341 INFO    [MainThread] app.selftest: SELFTEST final: speed                 PASS 2.7 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.964}, 'meeting': {'language': 'en', 'probability': 0.969}}, 'echo_segments_removed': 0}
+2026-10-12 19:54:35,345 INFO    [MainThread] app.selftest: SELFTEST export txt/md/json           PASS transcript.txt, transcript.md, transcript.json
+2026-10-12 19:54:35,345 INFO    [MainThread] app.selftest: Self-test passed
+2026-10-12 19:55:58,620 INFO    [MainThread] main: Meeting Transcriber 1.0.0 starting (frozen=True, python 3.11.9)
+2026-10-12 19:55:58,976 INFO    [MainThread] app.selftest: SELFTEST imports                      PASS numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0
+2026-10-12 19:55:59,096 INFO    [MainThread] app.selftest: SELFTEST device enumeration (info)    PASS 1 microphones, 1 outputs
+2026-10-12 19:55:59,098 INFO    [MainThread] app.selftest: SELFTEST sample                       PASS D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\_internal\assets\selftest_jfk.flac
+2026-10-12 19:55:59,170 INFO    [MainThread] app.selftest: SELFTEST wav valid while recording    PASS 244800 frames
+2026-10-12 19:55:59,198 INFO    [MainThread] app.selftest: SELFTEST wav files                    PASS 28.0 s, 2 ch
+2026-10-12 19:55:59,638 INFO    [live-transcriber] app.models: Loaded model base from D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\models\base with 2 threads
+2026-10-12 19:56:01,408 INFO    [live-transcriber] app.transcribe: Live language locked to en (p=0.93)
+2026-10-12 19:56:05,246 INFO    [MainThread] app.selftest: SELFTEST live model                   PASS base
+2026-10-12 19:56:05,246 INFO    [MainThread] app.selftest: SELFTEST live transcription           PASS 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe
+2026-10-12 19:56:05,848 INFO    [MainThread] app.models: Loaded model base from D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\models\base with 4 threads
+2026-10-12 19:56:10,206 INFO    [MainThread] app.selftest: SELFTEST final: microphone track      PASS [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, | [00:00:07] You: ask what you can do for your country.
+2026-10-12 19:56:10,206 INFO    [MainThread] app.selftest: SELFTEST final: system-audio track    PASS [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, | [00:00:22] Meeting: ask what you can do for your country.
+2026-10-12 19:56:10,206 INFO    [MainThread] app.selftest: SELFTEST final: timestamps            PASS you@0.0 meeting@14.96
+2026-10-12 19:56:10,207 INFO    [MainThread] app.selftest: SELFTEST final: speed                 PASS 5.0 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.934}, 'meeting': {'language': 'en', 'probability': 0.924}}, 'echo_segments_removed': 0}
+2026-10-12 19:56:10,211 INFO    [MainThread] app.selftest: SELFTEST export txt/md/json           PASS transcript.txt, transcript.md, transcript.json
+2026-10-12 19:56:10,212 INFO    [MainThread] app.selftest: Self-test passed
+2026-10-12 19:56:11,155 INFO    [MainThread] main: Meeting Transcriber 1.0.0 starting (frozen=True, python 3.11.9)
+2026-10-12 19:56:11,432 INFO    [MainThread] app.selftest: SELFTEST imports                      PASS numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0
+2026-10-12 19:56:11,545 INFO    [MainThread] app.selftest: SELFTEST device enumeration (info)    PASS 1 microphones, 1 outputs
+2026-10-12 19:56:11,577 INFO    [capture-meeting] app.audio: meeting opened: Speakers (VB-Audio Virtual Cable) (loopback=True)
+2026-10-12 19:56:11,583 INFO    [capture-you] app.audio: you opened: CABLE Output (VB-Audio Virtual Cable) (loopback=False)
+2026-10-12 19:56:11,584 INFO    [MainThread] app.selftest: SELFTEST real capture: open system audio PASS Speakers (VB-Audio Virtual Cable)
+2026-10-12 19:56:11,584 INFO    [MainThread] app.selftest: SELFTEST real capture: open microphone PASS CABLE Output (VB-Audio Virtual Cable)
+2026-10-12 19:56:25,199 INFO    [capture-you] app.audio: Closed you.wav (13.6 s)
+2026-10-12 19:56:25,224 INFO    [capture-meeting] app.audio: Closed meeting.wav (13.6 s)
+2026-10-12 19:56:25,226 INFO    [MainThread] app.selftest: SELFTEST real capture: recorded, aligned PASS {'meeting': 13.6, 'you': 13.6} (playback: ok)
+2026-10-12 19:56:25,789 INFO    [MainThread] app.models: Loaded model base from D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\models\base with 4 threads
+2026-10-12 19:56:27,940 INFO    [MainThread] app.selftest: SELFTEST real capture: system audio transcribed PASS And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:56:30,093 INFO    [MainThread] app.selftest: SELFTEST real capture: microphone transcribed PASS And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country.
+2026-10-12 19:56:30,118 INFO    [MainThread] app.selftest: SELFTEST sample                       PASS D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\_internal\assets\selftest_jfk.flac
+2026-10-12 19:56:30,211 INFO    [MainThread] app.selftest: SELFTEST wav valid while recording    PASS 244800 frames
+2026-10-12 19:56:30,245 INFO    [MainThread] app.selftest: SELFTEST wav files                    PASS 28.0 s, 2 ch
+2026-10-12 19:56:30,695 INFO    [live-transcriber] app.models: Loaded model base from D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\models\base with 2 threads
+2026-10-12 19:56:32,436 INFO    [live-transcriber] app.transcribe: Live language locked to en (p=0.93)
+2026-10-12 19:56:36,294 INFO    [MainThread] app.selftest: SELFTEST live model                   PASS base
+2026-10-12 19:56:36,294 INFO    [MainThread] app.selftest: SELFTEST live transcription           PASS 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe
+2026-10-12 19:56:36,843 INFO    [MainThread] app.models: Loaded model base from D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\models\base with 4 threads
+2026-10-12 19:56:41,195 INFO    [MainThread] app.selftest: SELFTEST final: microphone track      PASS [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, | [00:00:07] You: ask what you can do for your country.
+2026-10-12 19:56:41,196 INFO    [MainThread] app.selftest: SELFTEST final: system-audio track    PASS [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, | [00:00:22] Meeting: ask what you can do for your country.
+2026-10-12 19:56:41,196 INFO    [MainThread] app.selftest: SELFTEST final: timestamps            PASS you@0.0 meeting@14.96
+2026-10-12 19:56:41,196 INFO    [MainThread] app.selftest: SELFTEST final: speed                 PASS 4.9 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.934}, 'meeting': {'language': 'en', 'probability': 0.924}}, 'echo_segments_removed': 0}
+2026-10-12 19:56:41,200 INFO    [MainThread] app.selftest: SELFTEST export txt/md/json           PASS transcript.txt, transcript.md, transcript.json
+2026-10-12 19:56:41,201 INFO    [MainThread] app.selftest: Self-test passed
+2026-10-12 19:56:43,839 INFO    [MainThread] main: Meeting Transcriber 1.0.0 starting (frozen=True, python 3.11.9)
+2026-10-12 19:57:01,922 INFO    [MainThread] main: Devices: 1 microphones, 1 outputs
+2026-10-12 19:57:21,799 INFO    [MainThread] main: Exit (0). Log: C:\Users\runneradmin\AppData\Local\MeetingTranscriber\logs\app.log
+```
