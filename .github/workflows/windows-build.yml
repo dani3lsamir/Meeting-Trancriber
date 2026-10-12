@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write   # only used to push the test report as a git note (refs/notes/ci)
   checks: write
 
 jobs:
@@ -107,6 +107,12 @@ jobs:
         run: |
           python tools/ci_report.py ${{ github.sha }} check.json "selftest-*.json" --log "$env:LOCALAPPDATA/MeetingTranscriber/logs/app.log"
           gh api repos/${{ github.repository }}/check-runs --input check.json | Out-Null
+          python -c "import json; print(json.load(open('check.json'))['output']['text'])" > report.md
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin refs/notes/ci:refs/notes/ci 2>$null
+          git notes --ref ci add -f -F report.md ${{ github.sha }}
+          git push -f origin refs/notes/ci
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
