@@ -4,6 +4,10 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  checks: write
+
 jobs:
   build:
     runs-on: windows-latest
@@ -94,6 +98,15 @@ jobs:
           $p.WaitForExit(30000) | Out-Null
           if ($p.ExitCode -ne 0) { throw "GUI exit code $($p.ExitCode)" }
           Get-Content "$env:LOCALAPPDATA/MeetingTranscriber/logs/app.log" -Tail 40
+
+      - name: Publish self-test report as a check run
+        if: always()
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python tools/ci_report.py ${{ github.sha }} check.json "selftest-*.json" --log "$env:LOCALAPPDATA/MeetingTranscriber/logs/app.log"
+          gh api repos/${{ github.repository }}/check-runs --input check.json | Out-Null
 
       - name: Upload Windows build
         uses: actions/upload-artifact@v4
