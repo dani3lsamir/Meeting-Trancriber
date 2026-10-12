@@ -28,7 +28,12 @@ MEETING_OFFSET = 15.0
 
 def _versions() -> dict:
     out = {'python': sys.version.split()[0], 'platform': platform.platform(), 'frozen': bool(getattr(sys, 'frozen', False))}
-    for mod in ('numpy', 'ctranslate2', 'faster_whisper', 'av', 'onnxruntime', 'tokenizers', 'PySide6', 'soundcard'):
+    try:  # version only: importing soundcard here would initialise COM on this thread
+        from importlib.metadata import version
+        out['soundcard'] = version('soundcard')
+    except Exception as exc:
+        out['soundcard'] = f'ERROR: {exc}'
+    for mod in ('numpy', 'ctranslate2', 'faster_whisper', 'av', 'onnxruntime', 'tokenizers', 'PySide6'):
         try:
             m = __import__(mod)
             out[mod] = getattr(m, '__version__', 'ok')
@@ -175,12 +180,12 @@ def _capture_test(check, results, work, mic_id, output_id, model_name, sample) -
         s.start()
     for s in streams:
         s.ready.wait(10)
-    errors = [s.error for s in streams if s.error]
-    if errors:
+    for s in streams:
+        check(f'real capture: open {s.label.lower()}', not s.error, s.error or s.device_name)
+    streams = [s for s in streams if not s.error]
+    if not any(s.source == 'meeting' for s in streams):
         stop.set()
-        check('real capture: open devices', False, '; '.join(errors))
         return
-    check('real capture: open devices', True, ', '.join(f'{s.source}={s.device_name}' for s in streams))
     audio = decode_audio(str(sample), sampling_rate=RATE)
 
     def play():
@@ -201,15 +206,14 @@ def _capture_test(check, results, work, mic_id, output_id, model_name, sample) -
     results['capture'] = {'durations': durations, 'warnings': warnings, 'playback': played,
                           'peak_levels': {s.source: s.level for s in streams}}
     spread = max(durations.values()) - min(durations.values())
-    check('real capture: files aligned', all(d > 10 for d in durations.values()) and spread < 0.5,
+    check('real capture: recorded, aligned', all(d > 10 for d in durations.values()) and spread < 0.5,
           f'{durations} (playback: {played})')
     model = load_model(model_name, cpu_threads(False))
-    rows, _ = final_transcription(model, [('meeting', folder / 'meeting.wav')], 'auto', threading.Event())
-    text = ' '.join(r['text'] for r in rows)
-    check('real capture: loopback transcribed', 'country' in text.lower(), text[:200])
-    if mic_id:
-        check('real capture: microphone (info)', True, f'{durations.get("you")} s recorded from {mic_id}')
-    else:
+    for s in streams:
+        rows, _ = final_transcription(model, [(s.source, s.path)], 'auto', threading.Event())
+        text = ' '.join(r['text'] for r in rows)
+        check(f'real capture: {s.label.lower()} transcribed', 'country' in text.lower(), text[:200] or '(no speech)')
+    if not mic_id:
         check('real capture: microphone (info)', True, 'no microphone on this machine; mic capture not tested')
 
 

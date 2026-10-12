@@ -51,6 +51,17 @@ jobs:
         uses: LABSN/sound-ci-helpers@v1
         continue-on-error: true
 
+      - name: Allow desktop apps to use the microphone (Windows privacy setting)
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          foreach ($root in 'HKCU:', 'HKLM:') {
+            $k = "$root\Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone"
+            New-Item -Force -Path "$k\NonPackaged" | Out-Null
+            Set-ItemProperty -Path $k -Name Value -Value Allow
+            Set-ItemProperty -Path "$k\NonPackaged" -Name Value -Value Allow
+          }
+
       - name: Real WASAPI loopback capture test from source
         continue-on-error: true
         run: python main.py --self-test --model tiny --capture-test --report selftest-capture-source.json
@@ -97,7 +108,10 @@ jobs:
           if ($p.HasExited) { throw "GUI exited early with code $($p.ExitCode)" }
           $p.WaitForExit(30000) | Out-Null
           if ($p.ExitCode -ne 0) { throw "GUI exit code $($p.ExitCode)" }
-          Get-Content "$env:LOCALAPPDATA/MeetingTranscriber/logs/app.log" -Tail 40
+          $log = Get-Content "$env:LOCALAPPDATA/MeetingTranscriber/logs/app.log" -Tail 60
+          $log
+          if ($log -match 'Device enumeration failed') { throw 'GUI could not list audio devices' }
+          if (-not ($log -match 'Devices: \d+ microphones')) { throw 'GUI did not report audio devices' }
 
       - name: Publish self-test report as a check run
         if: always()

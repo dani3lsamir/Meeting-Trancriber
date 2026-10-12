@@ -41,21 +41,71 @@ _sc = None
 _sc_lock = threading.Lock()
 
 
+def _import_soundcard():
+    import soundcard as sc
+    if sys.platform == 'win32':
+        # We manage COM per thread ourselves; stop soundcard from calling
+        # CoUninitialize from an unrelated thread at interpreter exit.
+        with contextlib.suppress(Exception):
+            sc.mediafoundation._com.com_loaded = False
+    return sc
+
+
 def soundcard():
-    """Import soundcard lazily (must be called from a COM-initialised thread)."""
+    """Import soundcard once, on a dedicated thread.
+
+    soundcard calls CoInitializeEx at import time and treats S_FALSE ("already
+    initialised") as an error, so the import must not run on a thread that has
+    COM initialised already (GUI thread, capture threads). A fresh thread is
+    used, leaving the GUI thread's apartment untouched.
+    """
     global _sc
     with _sc_lock:
         if _sc is None:
             warnings.filterwarnings('once', message='data discontinuity')
-            import soundcard as sc
-            if sys.platform == 'win32':
-                # The import initialised COM on this worker thread; we manage
-                # COM lifetimes ourselves, so stop soundcard from calling
-                # CoUninitialize from an unrelated thread at interpreter exit.
-                with contextlib.suppress(Exception):
-                    sc.mediafoundation._com.com_loaded = False
-            _sc = sc
+            box: dict = {}
+
+            def target():
+                try:
+                    box['sc'] = _import_soundcard()
+                except BaseException as exc:
+                    box['error'] = exc
+
+            t = threading.Thread(target=target, name='soundcard-import', daemon=True)
+            t.start()
+            t.join(30)
+            if 'error' in box:
+                raise RuntimeError(f'Windows audio (WASAPI) unavailable: {explain(box["error"])}') from box['error']
+            if 'sc' not in box:
+                raise TimeoutError('Loading the Windows audio library timed out')
+            _sc = box['sc']
         return _sc
+
+
+_HRESULTS = {
+    0x80070005: 'access denied: Windows privacy settings block microphone access. Open Settings > Privacy & security '
+                '> Microphone and turn on "Microphone access" and "Let desktop apps access your microphone"',
+    0x88890004: 'the audio device was removed, disabled or changed (AUDCLNT_E_DEVICE_INVALIDATED)',
+    0x8889000A: 'the device is in exclusive use by another application. In Sound settings > device > Advanced, '
+                'untick "Allow applications to take exclusive control" (AUDCLNT_E_DEVICE_IN_USE)',
+    0x88890008: 'the device does not support the requested format (AUDCLNT_E_UNSUPPORTED_FORMAT)',
+    0x88890001: 'the audio device is not initialised (AUDCLNT_E_NOT_INITIALIZED)',
+    0x88890010: 'the Windows audio service is not running (AUDCLNT_E_SERVICE_NOT_RUNNING)',
+    0x80070490: 'no such audio device (E_NOTFOUND)',
+    0x800401F0: 'COM not initialised on the capture thread (CO_E_NOTINITIALIZED)',
+}
+
+
+def explain(exc: BaseException) -> str:
+    """Turn soundcard's 'Error 0x8xxxxxxx' messages into actionable text."""
+    import re
+    text = str(exc)
+    m = re.search(r'0x([0-9a-fA-F]{8,9})', text)
+    if m:
+        code = int(m.group(1), 16) & 0xFFFFFFFF
+        if code in _HRESULTS:
+            return f'{_HRESULTS[code]} [0x{code:08X}]'
+    return text
 
 
 @contextlib.contextmanager
@@ -232,7 +282,7 @@ class CaptureStream(threading.Thread):
                 self.writer = WavWriter(self.path, self.channels)
                 self._run()
             except Exception as exc:
-                self.error = f'{self.label}: {exc}'
+                self.error = f'{self.label}: {explain(exc)}'
                 log.exception('Capture %s failed', self.source)
             finally:
                 self.ready.set()
@@ -275,7 +325,7 @@ class CaptureStream(threading.Thread):
                 failures += 1
                 log.warning('%s capture interrupted (%s); retry %d', self.source, exc, failures)
                 if failures == 1:
-                    self.on_warning(f'{self.label} interrupted ({exc}); reconnecting…')
+                    self.on_warning(f'{self.label} interrupted ({explain(exc)}); reconnecting…')
                 self.level = 0.0
                 self.stop_event.wait(min(5.0, 0.5 * failures))
 
