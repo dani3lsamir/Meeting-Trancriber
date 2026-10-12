@@ -1,47 +1,136 @@
-# Meeting Transcriber — Windows prototype
+# Meeting Transcriber (Windows)
 
-Simple independent desktop app: microphone + Windows system audio loopback, provisional live subtitles, a second final offline transcription pass, and `.txt`, `.md`, `.json` exports. No subscription, summary, online API, or ShivOS dependency.
+A small, private desktop app that records **your microphone** and **everything your PC plays**
+(Microsoft Teams, Google Meet, Zoom, or any other app) at the same time, shows a provisional live
+transcript, and after you stop creates an accurate, timestamped transcript. Everything runs locally
+with [faster-whisper](https://github.com/SYSTRAN/faster-whisper). There are no accounts, cloud APIs,
+subscriptions or meeting integrations.
 
-## Setup and build on Windows 10/11
+## Using the app
 
-1. Install **64-bit Python 3.11** from python.org and ensure the Python Launcher (`py`) is available.
-2. Extract this folder. Double-click **build_windows.bat**. It creates `.venv`, installs dependencies, and uses PyInstaller.
-3. Run `dist\MeetingTranscriber\MeetingTranscriber.exe`. Distribute the **whole** `dist\MeetingTranscriber` directory (not the EXE alone).
-4. First start: select your mic and the exact speakers/headphones used by Teams/Zoom/Meet; choose a language and models. Click **Start meeting**.
-5. Speak and play test audio to verify. Live output is provisional and may be delayed, particularly on CPU.
-6. Click **Stop and transcribe**. Wait until the final pass finishes. Files are stored under `%LOCALAPPDATA%\MeetingTranscriber\Meetings\YYYY-MM-DD_HH-MM-SS`.
+1. Start `MeetingTranscriber.exe`.
+2. **Microphone (you):** the mic you speak into.
+   **Speakers / headset (meeting):** the playback device that Teams, Meet or Zoom uses. This must be
+   the device you *hear* the meeting on. If you use a headset, pick the headset, not the laptop
+   speakers. Check the device in the meeting app's audio settings, or in Windows Sound settings.
+3. Choose the language (Auto detect works; a fixed language is more consistent), the **live model**
+   (`tiny` is fastest, `base` is the default, `off` disables live text) and the **final model**
+   (`small` is the default; `medium` and `large-v3-turbo` are more accurate but much slower on CPU).
+4. Press **Start recording**. Both level meters should move: the mic meter when you talk, the meeting
+   meter when others talk or any sound plays.
+5. Press **Stop and transcribe**. The live text is replaced by the final transcript when the second
+   pass finishes. **Skip final pass** keeps the recordings and the live transcript only.
 
-To run in development mode after installing the dependencies: `run_windows.bat`.
+Each meeting gets its own folder in `%LOCALAPPDATA%\MeetingTranscriber\Meetings\YYYY-MM-DD_HH-MM-SS\`
+(the **Open folder** button opens it):
 
-## Important limitations
+| File | Contents |
+|---|---|
+| `you.wav` | Original microphone recording (48 kHz, 16-bit, mono) |
+| `meeting.wav` | Original system-audio (WASAPI loopback) recording (48 kHz, 16-bit, stereo) |
+| `transcript.txt` | Final transcript, one `[HH:MM:SS] You/Meeting: text` line per segment |
+| `transcript.md` | Same transcript as Markdown |
+| `transcript.json` | Segments with start/end times, source and metadata |
+| `live_transcript.txt` | Provisional live text, written while recording |
+| `session.json` | Devices, models, duration, detected language |
 
-- Models download from Hugging Face **once** when first used; for completely offline first launch, pre-download/cache the chosen models with a connection. After caching, inference is local. The built EXE doesn't include model weights.
-- Both the mic and WASAPI loopback streams must open successfully. Some Bluetooth, USB, virtual, or mono devices have incompatible channel maps. The app reports errors but may need device-specific changes. Select the actual playback output used by the meeting software.
-- Live processing is chunked at ~8 s and can fall behind on low-power CPUs. The final pass uses the full recordings and a higher beam search. `small` or `medium` may take considerable time.
-- Output labels distinguish **You** and **Meeting**, *not* individual remote speakers. System loopback records **all** PC audio played through that output, including notifications. Headphone monitoring and echo cancellation can affect overlap.
-- Clock drift between devices and simultaneous speech can produce imperfect order. Time alignment is approximate, not sample-perfect. Recordings may include duplicate speech if speakers feed into the mic.
-- Interruptions or machine shutdown may leave WAV files to be manually recovered; recordings are streamed to disk as the call runs. This prototype does not include automatic recovery or true live word-by-word captions.
-- For legal, confidentiality and workplace-policy reasons, obtain consent before recording meetings; consider whether local machine policies allow audio capture.
-- PyInstaller **cannot build a Windows EXE on Linux or macOS**. Run the `.bat` on Windows. Packaging and capture have not been hardware-tested in this environment.
+Both WAV files share one timeline: second 600 in `you.wav` is the same moment as second 600 in
+`meeting.wav`. The WAV headers are updated while recording, so the files stay playable even if the
+PC crashes.
 
-## Folder layout
+Logs are in `%LOCALAPPDATA%\MeetingTranscriber\logs\app.log`. Include this file when you report a
+problem.
+
+## Models (local only)
+
+The Windows build ships with the `base` and `small` models in `MeetingTranscriber\models\`, so
+it works offline out of the box. Other models (`tiny`, `medium`, `large-v3-turbo`) are downloaded
+**once** from Hugging Face the first time you select them. They are stored in
+`%LOCALAPPDATA%\MeetingTranscriber\models\`, and from then on they run offline.
+
+* To prevent any download, set the environment variable `MEETINGTRANSCRIBER_OFFLINE=1`.
+* To add models manually, copy them into the `models` folder next to the exe:
+  `python tools/fetch_models.py medium --dest dist\MeetingTranscriber\models`
+
+## Building on Windows
+
+Requirements: Windows 10 or 11 (64-bit), and 64-bit **Python 3.11** (or 3.12) from python.org with
+the `py` launcher.
+
+```bat
+build_windows.bat              :: builds and bundles the base + small models
+build_windows.bat tiny base    :: choose the bundled models
+build_windows.bat none         :: no bundled models (downloaded on first use)
+```
+
+The script creates `.venv`, installs `requirements-dev.txt`, runs `ruff` and the test suite, builds
+with `MeetingTranscriber.spec` (PyInstaller, one-folder, windowed), copies the models, and runs the
+built exe's self-test. Result:
 
 ```
-MeetingTranscriber/
-├── main.py                # PySide6 user interface
-├── app/
-│   ├── __init__.py
-│   ├── audio.py           # WASAPI capture and separate WAV files
-│   └── transcribe.py      # preview/final faster-whisper and exports
-├── requirements.txt
-├── build_windows.bat
-├── run_windows.bat
-└── README.md
+dist\MeetingTranscriber\MeetingTranscriber.exe
 ```
 
-## Diagnostics
+Distribute the **whole** `dist\MeetingTranscriber` folder, not only the exe. It has no installer and
+needs no admin rights.
 
-- If no remote speech appears, choose the actual output used by your meeting application, not a different output.
-- If you get a recorder channel/format error, switch to a stereo-capable Windows playback device or its native sample rate; SoundCard/WASAPI can be hardware-sensitive.
-- If preview is too slow, choose `tiny` for live and `base` for final. Set a specific language for more consistent text.
-- WAV files capture at 48 kHz mono PCM and are resampled to 16 kHz in memory for transcription. Final JSON contains time, source label and text.
+Development run: `run_windows.bat` (or `python main.py` inside the venv).
+
+The GitHub Actions workflow `.github/workflows/windows-build.yml` runs the same build on
+`windows-latest` on every push and uploads it as the artifact **MeetingTranscriber-windows-x64**.
+
+### Self-test and diagnostics
+
+```bat
+MeetingTranscriber.exe --self-test --report report.json
+MeetingTranscriber.exe --self-test --capture-test --report report.json
+```
+
+`--self-test` runs these checks without the GUI and writes a JSON report:
+
+* the native libraries load;
+* the audio devices are listed;
+* the WAV files are written in a crash-safe way;
+* live chunked transcription works;
+* the final pass and the TXT/MD/JSON export work.
+
+It uses a bundled 11-second public-domain speech sample. `--capture-test` also plays that sample
+on the default output device and records it via WASAPI loopback (plus the default microphone),
+then transcribes the recording.
+
+## How it works
+
+```
+ mic  ──WASAPI──► capture thread ──► you.wav      ─┐
+                                 └─► live queue ───┼─► live thread (small model, 5–8 s chunks) ─► GUI
+ output ─loopback► capture thread ──► meeting.wav ─┘
+                                 └─► live queue
+ Stop ─► close WAVs ─► final pass (beam 5, VAD, whole files) ─► echo filter ─► transcript.txt/.md/.json
+```
+
+* `app/audio.py`: WASAPI capture through `soundcard`. It initialises COM in each capture thread,
+  writes crash-safe WAV files, aligns both streams to one wall clock, and reconnects automatically
+  if a device disappears.
+* `app/transcribe.py`: live chunking (cuts at the quietest moment), the final pass, the echo filter
+  and the exports.
+* `app/session.py`: the lifecycle of one meeting, on a background thread.
+* `app/models.py`: finds a local model or downloads it once.
+* `main.py`: the PySide6 GUI. It only reacts to queued signals, so it never blocks.
+
+## Limitations and tips
+
+* **Speakers are labelled "You" and "Meeting"**, not by name. Everything played by the selected
+  output device is in `meeting.wav`, including notification sounds and music.
+* **Use headphones if you can.** With loudspeakers, the mic also picks up the other participants. The
+  final pass drops "You" lines that closely repeat a "Meeting" line at the same time, but partial
+  echo may remain.
+* **Bluetooth headsets** switch to a "hands-free" device when the meeting app opens their mic. If
+  the selected device disappears, the app reconnects or falls back to the Windows default output,
+  and inserts silence for the gap. Check the warning shown in the window.
+* Live text is provisional and appears with a delay of about 5–10 seconds. If the CPU cannot keep
+  up, live preview skips ahead and tells you; the final pass always processes everything.
+* Final-pass time on CPU, roughly per hour of meeting (each source is transcribed): `base` is a few
+  minutes, `small` is 10–20 minutes, `medium` and `large-v3-turbo` take considerably longer.
+* A single WAV file is limited to 4 GB, which is about 6 hours of stereo system audio. Recording
+  stops cleanly at that point.
+* Get everyone's consent before recording a meeting, and follow your organisation's policies.

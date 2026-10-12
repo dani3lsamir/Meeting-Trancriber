@@ -1,7 +1,5 @@
+# Runtime dependencies (all inference is local; no cloud APIs)
 PySide6>=6.8,<7
-soundcard>=0.4.3,<0.5
+soundcard>=0.4.5,<0.5
 numpy>=1.26,<3
-scipy>=1.13,<2
-soundfile>=0.12,<1
 faster-whisper>=1.1,<2
-pyinstaller>=6.10,<7

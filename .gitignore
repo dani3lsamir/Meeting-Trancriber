@@ -1,0 +1,9 @@
+.venv/
+build/
+dist/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+models/
+selftest-report.json
