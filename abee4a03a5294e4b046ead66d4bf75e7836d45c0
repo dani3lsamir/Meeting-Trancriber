@@ -1,0 +1,180 @@
+## selftest-capture-exe.json: FAILED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 1 microphones, 1 outputs |
+| real capture: open devices | FAIL | Microphone: Error 0x80070005 |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\_internal\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | base |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, / [00:00:07] You: ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, / [00:00:22] Meeting: ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 3.1 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.91}, 'meeting': {'language': 'en', 'probability': 0.94}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [["{0.0.1.00000000}.{b111d976-c702-4199-901d-05f9743d10f3}", "CABLE Output (VB-Audio Virtual Cable)"]], "outputs": [["{0.0.0.00000000}.{b795c1e7-727e-4b9f-a161-25057d7333bc}", "Speakers (VB-Audio Virtual Cable)"]], "default_mic": "{0.0.1.00000000}.{b111d976-c702-4199-901d-05f9743d10f3}", "default_output": "{0.0.0.00000000}.{b795c1e7-727e-4b9f-a161-25057d7333bc}"}`
+
+## selftest-capture-source.json: FAILED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 1 microphones, 1 outputs |
+| real capture: open devices | FAIL | Microphone: Error 0x80070005 |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | tiny |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 1.8 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.964}, 'meeting': {'language': 'en', 'probability': 0.969}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [["{0.0.1.00000000}.{b111d976-c702-4199-901d-05f9743d10f3}", "CABLE Output (VB-Audio Virtual Cable)"]], "outputs": [["{0.0.0.00000000}.{b795c1e7-727e-4b9f-a161-25057d7333bc}", "Speakers (VB-Audio Virtual Cable)"]], "default_mic": "{0.0.1.00000000}.{b111d976-c702-4199-901d-05f9743d10f3}", "default_output": "{0.0.0.00000000}.{b795c1e7-727e-4b9f-a161-25057d7333bc}"}`
+
+## selftest-exe.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 1 microphones, 1 outputs |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\_internal\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | base |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, / [00:00:07] You: ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, / [00:00:22] Meeting: ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 3.1 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.91}, 'meeting': {'language': 'en', 'probability': 0.94}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [["{0.0.1.00000000}.{b111d976-c702-4199-901d-05f9743d10f3}", "CABLE Output (VB-Audio Virtual Cable)"]], "outputs": [["{0.0.0.00000000}.{b795c1e7-727e-4b9f-a161-25057d7333bc}", "Speakers (VB-Audio Virtual Cable)"]], "default_mic": "{0.0.1.00000000}.{b111d976-c702-4199-901d-05f9743d10f3}", "default_output": "{0.0.0.00000000}.{b795c1e7-727e-4b9f-a161-25057d7333bc}"}`
+
+## selftest-source-small.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 0 microphones, 0 outputs |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | small |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so, my f |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 8.9 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.956}, 'meeting': {'language': 'en', 'probability': 0.92}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [], "outputs": [], "default_mic": null, "default_output": null}`
+
+## selftest-source-tiny.json: PASSED
+
+| check | result | detail |
+|---|---|---|
+| imports | PASS | numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0 |
+| device enumeration (info) | PASS | 0 microphones, 0 outputs |
+| sample | PASS | D:\a\Meeting-Trancriber\Meeting-Trancriber\assets\selftest_jfk.flac |
+| wav valid while recording | PASS | 244800 frames |
+| wav files | PASS | 28.0 s, 2 ch |
+| live model | PASS | tiny |
+| live transcription | PASS | 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe |
+| final: microphone track | PASS | [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: system-audio track | PASS | [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, ask what you can do for your country. |
+| final: timestamps | PASS | you@0.0 meeting@14.96 |
+| final: speed | PASS | 2.0 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.964}, 'meeting': {'language': 'en', 'probability': 0.969}}, 'echo_segments_removed': 0} |
+| export txt/md/json | PASS | transcript.txt, transcript.md, transcript.json |
+
+devices: `{"microphones": [], "outputs": [], "default_mic": null, "default_output": null}`
+
+## app.log (tail)
+```
+2026-10-12 19:42:04,380 INFO    [MainThread] app.selftest: SELFTEST final: timestamps            PASS you@0.0 meeting@14.96
+2026-10-12 19:42:04,380 INFO    [MainThread] app.selftest: SELFTEST final: speed                 PASS 3.1 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.91}, 'meeting': {'language': 'en', 'probability': 0.94}}, 'echo_segments_removed': 0}
+2026-10-12 19:42:04,396 INFO    [MainThread] app.selftest: SELFTEST export txt/md/json           PASS transcript.txt, transcript.md, transcript.json
+2026-10-12 19:42:04,398 INFO    [MainThread] app.selftest: Self-test passed
+2026-10-12 19:42:05,137 INFO    [MainThread] main: Meeting Transcriber 1.0.0 starting (frozen=True, python 3.11.9)
+2026-10-12 19:42:05,416 INFO    [MainThread] app.selftest: SELFTEST imports                      PASS numpy=2.4.6, ctranslate2=4.8.2, faster_whisper=1.2.1, av=18.1.0, onnxruntime=1.31.0, tokenizers=0.23.3, PySide6=6.12.0
+2026-10-12 19:42:05,440 INFO    [MainThread] app.selftest: SELFTEST device enumeration (info)    PASS 1 microphones, 1 outputs
+2026-10-12 19:42:05,460 ERROR   [capture-you] app.audio: Capture you failed
+Traceback (most recent call last):
+  File "app\audio.py", line 233, in run
+    self._run()
+  File "app\audio.py", line 263, in _run
+    with device.recorder(samplerate=RATE, channels=channels, blocksize=BLOCK) as recorder:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "soundcard\mediafoundation.py", line 478, in recorder
+    return _Recorder(self._audio_client(), samplerate, channels, blocksize, self.isloopback, exclusive_mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "soundcard\mediafoundation.py", line 551, in __init__
+    _com.check_error(hr)
+  File "soundcard\mediafoundation.py", line 107, in check_error
+    raise RuntimeError('Error {}'.format(hex(hresult+2**32)))
+RuntimeError: Error 0x80070005
+2026-10-12 19:42:05,464 INFO    [capture-meeting] app.audio: meeting opened: Speakers (VB-Audio Virtual Cable) (loopback=True)
+2026-10-12 19:42:05,464 INFO    [capture-you] app.audio: Closed you.wav (0.0 s)
+2026-10-12 19:42:05,465 INFO    [MainThread] app.selftest: SELFTEST real capture: open devices   FAIL Microphone: Error 0x80070005
+2026-10-12 19:42:05,468 INFO    [MainThread] app.selftest: SELFTEST sample                       PASS D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\_internal\assets\selftest_jfk.flac
+2026-10-12 19:42:05,520 INFO    [MainThread] app.selftest: SELFTEST wav valid while recording    PASS 244800 frames
+2026-10-12 19:42:05,545 INFO    [MainThread] app.selftest: SELFTEST wav files                    PASS 28.0 s, 2 ch
+2026-10-12 19:42:05,593 INFO    [capture-meeting] app.audio: Closed meeting.wav (0.1 s)
+2026-10-12 19:42:05,834 INFO    [live-transcriber] app.models: Loaded model base from D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\models\base with 2 threads
+2026-10-12 19:42:07,165 INFO    [live-transcriber] app.transcribe: Live language locked to en (p=0.93)
+2026-10-12 19:42:10,572 INFO    [MainThread] app.selftest: SELFTEST live model                   PASS base
+2026-10-12 19:42:10,574 INFO    [MainThread] app.selftest: SELFTEST live transcription           PASS 3 rows: and so my fellow americans, ask not what your country can do for you. ask what you can do for your country. and so my fe
+2026-10-12 19:42:10,930 INFO    [MainThread] app.models: Loaded model base from D:\a\Meeting-Trancriber\Meeting-Trancriber\dist\MeetingTranscriber\models\base with 4 threads
+2026-10-12 19:42:13,641 INFO    [MainThread] app.selftest: SELFTEST final: microphone track      PASS [00:00:00] You: And so my fellow Americans, ask not what your country can do for you, | [00:00:07] You: ask what you can do for your country.
+2026-10-12 19:42:13,641 INFO    [MainThread] app.selftest: SELFTEST final: system-audio track    PASS [00:00:14] Meeting: And so my fellow Americans, ask not what your country can do for you, | [00:00:22] Meeting: ask what you can do for your country.
+2026-10-12 19:42:13,641 INFO    [MainThread] app.selftest: SELFTEST final: timestamps            PASS you@0.0 meeting@14.96
+2026-10-12 19:42:13,641 INFO    [MainThread] app.selftest: SELFTEST final: speed                 PASS 3.1 s for 22.0 s of speech; {'detected_language': {'you': {'language': 'en', 'probability': 0.91}, 'meeting': {'language': 'en', 'probability': 0.94}}, 'echo_segments_removed': 0}
+2026-10-12 19:42:13,645 INFO    [MainThread] app.selftest: SELFTEST export txt/md/json           PASS transcript.txt, transcript.md, transcript.json
+2026-10-12 19:42:13,645 INFO    [MainThread] app.selftest: Self-test failed
+2026-10-12 19:42:14,773 INFO    [MainThread] main: Meeting Transcriber 1.0.0 starting (frozen=True, python 3.11.9)
+2026-10-12 19:42:17,673 ERROR   [devices] main: Device enumeration failed
+Traceback (most recent call last):
+  File "main.py", line 193, in worker
+    self.bridge.devices.emit(list_devices())
+                             ^^^^^^^^^^^^^^
+  File "app\audio.py", line 121, in list_devices
+    return run_in_com_thread(_list_devices)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "app\audio.py", line 96, in run_in_com_thread
+    raise result['error']
+  File "app\audio.py", line 86, in target
+    result['value'] = fn()
+                      ^^^^
+  File "app\audio.py", line 110, in _list_devices
+    sc = soundcard()
+         ^^^^^^^^^^^
+  File "app\audio.py", line 50, in soundcard
+    import soundcard as sc
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "pyimod02_importers.py", line 457, in exec_module
+  File "soundcard\__init__.py", line 13, in <module>
+    from soundcard.mediafoundation import *
+  File "<frozen importlib._bootstrap>", line 1176, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1147, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 690, in _load_unlocked
+  File "pyimod02_importers.py", line 457, in exec_module
+  File "soundcard\mediafoundation.py", line 116, in <module>
+    _com = _COMLibrary()
+           ^^^^^^^^^^^^^
+  File "soundcard\mediafoundation.py", line 69, in __init__
+    raise e
+  File "soundcard\mediafoundation.py", line 52, in __init__
+    self.check_error(hr)
+  File "soundcard\mediafoundation.py", line 107, in check_error
+    raise RuntimeError('Error {}'.format(hex(hresult+2**32)))
+RuntimeError: Error 0x100000001
+2026-10-12 19:42:38,073 INFO    [MainThread] main: Exit (0). Log: C:\Users\runneradmin\AppData\Local\MeetingTranscriber\logs\app.log
+```
