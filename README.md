@@ -117,6 +117,8 @@ then transcribes the recording.
 * `app/models.py`: finds a local model or downloads it once.
 * `main.py`: the PySide6 GUI. It only reacts to queued signals, so it never blocks.
 
+See [ISSUES.md](ISSUES.md) for the bugs found in the original prototype and how they were fixed.
+
 ## Limitations and tips
 
 * **Speakers are labelled "You" and "Meeting"**, not by name. Everything played by the selected
